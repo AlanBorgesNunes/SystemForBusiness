@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_caixa"
+        android:icon="@drawable/ic_round_add_box_24"
+        android:title="Box" />
+
+    <item
+        android:id="@+id/add_cliente"
+        android:icon="@drawable/ic_baseline_clientes_1_24"
+        android:title="Customers" />
+
+    <item
+        android:id="@+id/business"
+        android:icon="@drawable/ic_baseline_business_24"
+        android:title="Business" />
+</menu>

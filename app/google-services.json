@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1033862021490",
+    "project_id": "sitemaparannegocios",
+    "storage_bucket": "sitemaparannegocios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033862021490:android:1c57a7e00712e1f9f85deb",
+        "android_client_info": {
+          "package_name": "com.app.systemforbusiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033862021490-if40cor8b1onm7bk07euid88c1t1kh3b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.systemforbusiness",
+            "certificate_hash": "22977ed897492ec685f8a04977c7cf3ef90aefaa"
+          }
+        },
+        {
+          "client_id": "1033862021490-bobr6qve8dvgcls1smuurmj0a107igu2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFZmbi07Jx92W5N9HAyzZluVhiNHZWLjM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033862021490-bobr6qve8dvgcls1smuurmj0a107igu2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
