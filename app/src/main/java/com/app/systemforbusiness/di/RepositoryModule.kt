@@ -42,4 +42,12 @@ object RepositoryModule {
     ): AddWorkerRepository{
         return AddWorkerRepositoryImpl(database)
     }
+
+    @Provides
+    @Singleton
+    fun provideCaixa(
+        database: FirebaseFirestore
+    ): CaixaRepository{
+        return CaixaRepositoryImp(database)
+    }
 }
