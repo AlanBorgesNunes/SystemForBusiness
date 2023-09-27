@@ -4,15 +4,16 @@ import android.util.Log
 import com.app.systemforbusiness.models.MyCaixa
 import com.app.systemforbusiness.utils.UiState
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 
 class CaixaRepositoryImp(
     val database: FirebaseFirestore,
 ) : CaixaRepository {
 
 
-    override fun getEntradas( result: (UiState<ArrayList<MyCaixa>>) -> Unit) {
-        val document = database.collection("Entradas")
+    override fun getEntradas(mes: String, result: (UiState<ArrayList<MyCaixa>>) -> Unit) {
+        val document = database.collection("Caixa")
+            .document("Entrada")
+            .collection(mes)
         document.addSnapshotListener { value, error ->
             if (value != null){
                 val list = arrayListOf<MyCaixa>()
@@ -30,27 +31,107 @@ class CaixaRepositoryImp(
         }
     }
 
-    override fun getNumerosEntradas(result: (UiState<ArrayList<Int>>) -> Unit) {
-        val document = database.collection("Entradas")
+    override fun getNumerosEntradas(mes: String, result: (UiState<Any>) -> Unit) {
+        val document = database.collection("Caixa")
+            .document("Entrada")
+            .collection(mes)
         document
             .get()
             .addOnSuccessListener {
-                val valores = arrayListOf<Int>()
+                var soma = 0
 
-                for (doc in it){
-                    val item = doc.toObject(MyCaixa::class.java)
-                    if (item != null){
-                        valores.add(item.valor!!)
-                        result.invoke(UiState.Success(
-                            valores
-                        ))
-                    }else{
-                        result.invoke(UiState.Failure(
-                            "result null"
-                        ))
+                if (it.isEmpty) {
+                    UiState.Failure(
+                        "Campo vazio!"
+                    )
+                } else{
+                    for (doc in it) {
+                        val item = doc.toObject(MyCaixa::class.java)
+                        if (item.valor != null) {
+                            val valor = item.valor
+
+                            soma += valor!!
+                            Log.d("TAG", "getNumerosEntradas: ${soma}  ")
+                            result.invoke(
+                                UiState.Success(
+                                    soma
+                                )
+                            )
+                        } else {
+                            result.invoke(
+                                UiState.Failure(
+                                    "result null"
+                                )
+                            )
+                        }
+
                     }
+            }
+            }.addOnFailureListener {
+                result.invoke(UiState.Failure(
+                    it.localizedMessage
+                ))
+            }
 
-                }
+    }
+
+    override fun getSaidas(mes: String,result: (UiState<ArrayList<MyCaixa>>) -> Unit) {
+        val document = database.collection("Caixa")
+            .document("Saida")
+            .collection(mes)
+        document.addSnapshotListener { value, error ->
+            if (value != null){
+                val listSaida = arrayListOf<MyCaixa>()
+                val boxSaida  = value.toObjects(MyCaixa::class.java)
+                listSaida.addAll(boxSaida)
+                Log.d("TAG", "getEntradasRepository: $boxSaida ")
+                result.invoke(UiState.Success(
+                    listSaida
+                ))
+            }else{
+                result.invoke(UiState.Failure(
+                    error?.localizedMessage
+                ))
+            }
+        }
+    }
+
+    override fun getNumerosSaidas(mes: String, result: (UiState<Any>) -> Unit) {
+        val document = database.collection("Caixa")
+            .document("Saida")
+            .collection(mes)
+        document
+            .get()
+            .addOnSuccessListener {
+                var somaSaida = 0
+
+                if (it.isEmpty) {
+                    UiState.Failure(
+                        "Campo vazio!"
+                    )
+                } else{
+                    for (doc in it) {
+                        val itemSaida = doc.toObject(MyCaixa::class.java)
+                        if (itemSaida.valor != null) {
+                            val valorSaida = itemSaida.valor
+
+                            somaSaida += valorSaida!!
+                            Log.d("TAG", "getNumerosEntradas: ${somaSaida}  ")
+                            result.invoke(
+                                UiState.Success(
+                                    somaSaida
+                                )
+                            )
+                        } else {
+                            result.invoke(
+                                UiState.Failure(
+                                    "result null"
+                                )
+                            )
+                        }
+
+                    }
+            }
             }.addOnFailureListener {
                 result.invoke(UiState.Failure(
                     it.localizedMessage

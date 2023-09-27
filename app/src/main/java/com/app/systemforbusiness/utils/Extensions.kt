@@ -19,6 +19,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +28,7 @@ import androidx.fragment.app.Fragment
 import com.app.systemforbusiness.R
 import com.app.systemforbusiness.alarm.AlarmAniversario
 import com.google.i18n.phonenumbers.PhoneNumberUtil
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.coroutines.coroutineContext
@@ -85,10 +87,10 @@ fun scheduleBirthdayAlarm(birthdayDateMillis: Long){
     alarmManager.setExact(AlarmManager.RTC_WAKEUP, birthdayDateMillis, pendingIntent)
 
 }
-fun spinnerFun(context: Context, spinner: Spinner, list: List<Any>) {
+fun spinnerFun(context: Context, spinner: AutoCompleteTextView, list: List<Any>) {
     val adapterSpinner = ArrayAdapter(context, android.R.layout.simple_spinner_item, list)
     adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    spinner.adapter = adapterSpinner
+    spinner.setAdapter(adapterSpinner)
 }
 
 fun convertLongToTime(time: Long): String{
@@ -162,6 +164,12 @@ fun Context.createDialog(layout: Int, cancelable: Boolean): Dialog {
     dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     dialog.setCancelable(cancelable)
     return dialog
+}
+fun numberCurrency(
+    number: String
+): String? {
+    val decimalFormat = DecimalFormat("R$ ###,###,##0.00")
+    return decimalFormat.format(java.lang.Double.parseDouble(number))
 }
 
 val Int.dpToPx: Int

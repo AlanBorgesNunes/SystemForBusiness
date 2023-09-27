@@ -4,7 +4,11 @@ import com.app.systemforbusiness.models.MyCaixa
 import com.app.systemforbusiness.utils.UiState
 
 interface CaixaRepository {
-    fun getEntradas( result: (UiState<ArrayList<MyCaixa>>) -> Unit)
+    fun getEntradas(mes: String, result: (UiState<ArrayList<MyCaixa>>) -> Unit)
 
-    fun getNumerosEntradas(result: (UiState<ArrayList<Int>>) -> Unit)
+    fun getNumerosEntradas(mes: String,result: (UiState<Any>) -> Unit)
+
+    fun getSaidas(mes: String, result: (UiState<ArrayList<MyCaixa>>) -> Unit)
+
+    fun getNumerosSaidas(mes: String,result: (UiState<Any>) -> Unit)
 }

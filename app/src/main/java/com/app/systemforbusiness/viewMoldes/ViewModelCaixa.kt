@@ -19,23 +19,44 @@ class ViewModelCaixa @Inject constructor(
     val getEntradas: LiveData<UiState<ArrayList<MyCaixa>>>
         get() = _getEntradas
 
+    private val _getSaidas = MutableLiveData<UiState<ArrayList<MyCaixa>>>()
+    val getSaidas: LiveData<UiState<ArrayList<MyCaixa>>>
+        get() = _getSaidas
 
-    private val _getNumerosEntradas = MutableLiveData<UiState<ArrayList<Int>>>()
-    val getNumerosEntradas: LiveData<UiState<ArrayList<Int>>>
+    private val _getNumerosEntradas = MutableLiveData<UiState<Any>>()
+    val getNumerosEntradas: LiveData<UiState<Any>>
         get() = _getNumerosEntradas
 
-    fun getEntradas(){
+    private val _getNumerosSaidas = MutableLiveData<UiState<Any>>()
+    val getNumerosSaidas: LiveData<UiState<Any>>
+        get() = _getNumerosSaidas
+
+    fun getEntradas(mes:String){
         _getEntradas.value = UiState.Loading
-        repository.getEntradas(){
+        repository.getEntradas(mes){
             Log.d("TAG", "getEntradasViewlModel: $it ")
             _getEntradas.value = it
         }
     }
 
-    fun getNumerosEntradas(){
+    fun getNumerosEntradas(mes:String){
         _getNumerosEntradas.value = UiState.Loading
-        repository.getNumerosEntradas {
+        repository.getNumerosEntradas(mes) {
             _getNumerosEntradas.value = it
+        }
+    }
+
+    fun getSaidas(mes: String){
+        _getSaidas.value = UiState.Loading
+        repository.getSaidas(mes){
+            _getSaidas.value = it
+        }
+    }
+
+    fun getNumerosSaidas(mes: String){
+        _getNumerosSaidas.value = UiState.Loading
+        repository.getNumerosSaidas(mes){
+            _getNumerosSaidas.value = it
         }
     }
 }

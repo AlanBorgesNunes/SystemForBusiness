@@ -53,7 +53,7 @@ class AddNewColaboratorFragment : Fragment(), AdapterListWorkers.ClickWorkers {
             viewModel.addWorkers(
                 Workers(
                     name = binding.nomeColaborator.text.toString(),
-                    cargo = binding.spinnerReceiveCargos.selectedItem.toString(),
+                    cargo = binding.spinnerReceiveCargos.text.toString(),
                     data = dataL
                 )
             )
