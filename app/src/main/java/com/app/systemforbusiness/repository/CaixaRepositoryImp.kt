@@ -15,6 +15,7 @@ class CaixaRepositoryImp(
             .document("Entrada")
             .collection(mes)
         document.addSnapshotListener { value, error ->
+
             if (value != null){
                 val list = arrayListOf<MyCaixa>()
                 val box  = value.toObjects(MyCaixa::class.java)
@@ -41,9 +42,9 @@ class CaixaRepositoryImp(
                 var soma = 0
 
                 if (it.isEmpty) {
-                    UiState.Failure(
-                        "Campo vazio!"
-                    )
+                    result.invoke(UiState.Success(
+                        0
+                    ))
                 } else{
                     for (doc in it) {
                         val item = doc.toObject(MyCaixa::class.java)
@@ -51,12 +52,19 @@ class CaixaRepositoryImp(
                             val valor = item.valor
 
                             soma += valor!!
-                            Log.d("TAG", "getNumerosEntradas: ${soma}  ")
-                            result.invoke(
-                                UiState.Success(
-                                    soma
+
+                            if (soma < 1){
+                                UiState.Failure(
+                                    "Campo vazio!"
                                 )
-                            )
+                            }else {
+                                Log.d("TAG", "getNumerosEntradas: ${soma}  ")
+                                result.invoke(
+                                    UiState.Success(
+                                        soma
+                                    )
+                                )
+                            }
                         } else {
                             result.invoke(
                                 UiState.Failure(
@@ -65,7 +73,9 @@ class CaixaRepositoryImp(
                             )
                         }
 
+
                     }
+
             }
             }.addOnFailureListener {
                 result.invoke(UiState.Failure(
@@ -84,7 +94,7 @@ class CaixaRepositoryImp(
                 val listSaida = arrayListOf<MyCaixa>()
                 val boxSaida  = value.toObjects(MyCaixa::class.java)
                 listSaida.addAll(boxSaida)
-                Log.d("TAG", "getEntradasRepository: $boxSaida ")
+                Log.d("TAG", "getSaidasRepository: $boxSaida ")
                 result.invoke(UiState.Success(
                     listSaida
                 ))
@@ -106,9 +116,9 @@ class CaixaRepositoryImp(
                 var somaSaida = 0
 
                 if (it.isEmpty) {
-                    UiState.Failure(
-                        "Campo vazio!"
-                    )
+                    result.invoke(UiState.Success(
+                        0
+                    ))
                 } else{
                     for (doc in it) {
                         val itemSaida = doc.toObject(MyCaixa::class.java)
@@ -116,7 +126,7 @@ class CaixaRepositoryImp(
                             val valorSaida = itemSaida.valor
 
                             somaSaida += valorSaida!!
-                            Log.d("TAG", "getNumerosEntradas: ${somaSaida}  ")
+                            Log.d("TAG", "getNumerosSaidas: ${somaSaida}  ")
                             result.invoke(
                                 UiState.Success(
                                     somaSaida

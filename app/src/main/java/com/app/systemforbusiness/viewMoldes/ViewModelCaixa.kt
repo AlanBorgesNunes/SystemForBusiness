@@ -42,6 +42,7 @@ class ViewModelCaixa @Inject constructor(
     fun getNumerosEntradas(mes:String){
         _getNumerosEntradas.value = UiState.Loading
         repository.getNumerosEntradas(mes) {
+            Log.d("TAG", "getNumerosEntradasViewModel:$it ")
             _getNumerosEntradas.value = it
         }
     }
@@ -56,6 +57,7 @@ class ViewModelCaixa @Inject constructor(
     fun getNumerosSaidas(mes: String){
         _getNumerosSaidas.value = UiState.Loading
         repository.getNumerosSaidas(mes){
+            Log.d("TAG", "getNumerosSaidasViewModel:$it ")
             _getNumerosSaidas.value = it
         }
     }

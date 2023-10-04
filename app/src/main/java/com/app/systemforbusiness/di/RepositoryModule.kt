@@ -50,4 +50,5 @@ object RepositoryModule {
     ): CaixaRepository{
         return CaixaRepositoryImp(database)
     }
+
 }

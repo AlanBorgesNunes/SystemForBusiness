@@ -54,7 +54,7 @@ class AddNewColaboratorFragment : Fragment(), AdapterListWorkers.ClickWorkers {
                 Workers(
                     name = binding.nomeColaborator.text.toString(),
                     cargo = binding.spinnerReceiveCargos.text.toString(),
-                    data = dataL
+                    dataEntrada = dataL
                 )
             )
             }
@@ -160,7 +160,7 @@ class AddNewColaboratorFragment : Fragment(), AdapterListWorkers.ClickWorkers {
         val bundle = bundleOf(
             "nome" to workers.name,
             "cargo" to workers.cargo,
-            "data" to workers.data
+            "data" to workers.dataEntrada
         )
 
         val fragment = DetalhesForWorkersFragment()

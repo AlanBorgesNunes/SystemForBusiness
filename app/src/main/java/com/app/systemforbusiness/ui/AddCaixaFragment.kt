@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.datastore.preferences.core.emptyPreferences
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.systemforbusiness.adapters.AdapterCaixaEntradas
@@ -46,6 +48,20 @@ class AddCaixaFragment : Fragment() {
             viewLifecycleOwner
         }
 
+        oberservers()
+        initSpinner()
+
+       binding.btnGetResultCaixa.setOnClickListener {
+           getResults()
+       }
+        return binding.root
+    }
+
+    private fun initSpinner() {
+        spinnerFun(requireContext(), binding.spinnerLolo, lists.listMeses)
+    }
+
+    private fun oberservers() {
         viewModel.getSaidas.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Failure -> {
@@ -56,9 +72,9 @@ class AddCaixaFragment : Fragment() {
                 }
                 is UiState.Success -> {
 
-                    if (state.data.isEmpty()){
+                    if (state.data.isEmpty()) {
                         toast("Ainda não temos lançamentos pra esse mês!")
-                    }else {
+                    } else {
                         listSaidas.addAll(state.data)
                         binding.rvReceiveEntradasSaidas.show()
                         binding.rvReceiveEntradasSaidas.layoutManager =
@@ -81,9 +97,9 @@ class AddCaixaFragment : Fragment() {
                 }
                 is UiState.Success -> {
                     binding.progressUiui.hide()
-                    if (stateSaidas.data.toString().isEmpty()){
+                    if (stateSaidas.data.toString().isEmpty()) {
 
-                    }else {
+                    } else {
                         saidass = stateSaidas.data.toString()
                         binding.progressUiui.hide()
                         binding.caixaSaidas.show()
@@ -102,9 +118,9 @@ class AddCaixaFragment : Fragment() {
                     listEntradas.clear()
                 }
                 is UiState.Success -> {
-                    if (state.data.isEmpty()){
+                    if (state.data.isEmpty()) {
                         toast("Ainda não temos lançamentos pra esse mês!")
-                    }else {
+                    } else {
                         listEntradas.addAll(state.data)
                         binding.rvReceiveEntradasEntradas.show()
                         binding.rvReceiveEntradasEntradas.layoutManager =
@@ -127,25 +143,29 @@ class AddCaixaFragment : Fragment() {
                 UiState.Loading -> {
                     binding.caixaEntradas.hide()
                     binding.progressUiui.show()
+                    binding.totalMeu.text = "Aguarde..."
+                    binding.receivePorcentagem.text = "Aguarde..."
                 }
                 is UiState.Success -> {
+                    Log.d("TAG", "onCreateView: ${state.data}")
                     binding.progressUiui.hide()
-                    if (state.data.toString().isEmpty()){
+                    if (state.data.toString().isEmpty()) {
                         binding.progressUiui.hide()
-                    }else {
+                    } else {
                         entradas = state.data.toString()
                         binding.progressUiui.hide()
                         binding.caixaEntradas.show()
                         binding.caixaEntradas.text = numberCurrency(state.data.toString())
 
+
                         Handler(Looper.myLooper()!!).postDelayed({
                             if (entradas.isEmpty() || saidass.isEmpty()) {
-                                binding.total.text = "Recarregue a pagina!"
+                                binding.totalMeu.text = "Recarregue a pagina!"
                             } else {
                                 val resultado = entradas.toInt() - saidass.toInt()
                                 val porcentagem = entradas.toInt() * 0.3
                                 val resultTotal = resultado - porcentagem
-                                binding.total.text = numberCurrency(resultTotal.toString())
+                                binding.totalMeu.text = numberCurrency(resultTotal.toString())
                                 binding.receivePorcentagem.text =
                                     numberCurrency(porcentagem.toString())
                             }
@@ -157,15 +177,6 @@ class AddCaixaFragment : Fragment() {
                 }
             }
         }
-
-        spinnerFun(requireContext(), binding.spinnerLolo, lists.listMeses)
-
-
-       binding.btnGetResultCaixa.setOnClickListener {
-           getResults()
-       }
-
-        return binding.root
     }
 
     private fun getResults() {
@@ -194,6 +205,55 @@ class AddCaixaFragment : Fragment() {
                 viewModel.getNumerosSaidas("Mês abril")
                 viewModel.getSaidas("Mês abril")
             }
+            "Mês maio" -> {
+                viewModel.getEntradas("Mês maio")
+                viewModel.getNumerosEntradas("Mês maio")
+                viewModel.getNumerosSaidas("Mês maio")
+                viewModel.getSaidas("Mês maio")
+            }
+            "Mês junho" -> {
+                viewModel.getEntradas("Mês junho")
+                viewModel.getNumerosEntradas("Mês junho")
+                viewModel.getNumerosSaidas("Mês junho")
+                viewModel.getSaidas("Mês junho")
+            }
+            "Mês julho" -> {
+                viewModel.getEntradas("Mês julho")
+                viewModel.getNumerosEntradas("Mês julho")
+                viewModel.getNumerosSaidas("Mês julho")
+                viewModel.getSaidas("Mês julho")
+            }
+            "Mês agosto" -> {
+                viewModel.getEntradas("Mês agosto")
+                viewModel.getNumerosEntradas("Mês agosto")
+                viewModel.getNumerosSaidas("Mês agosto")
+                viewModel.getSaidas("Mês agosto")
+            }
+            "Mês setembro" -> {
+                viewModel.getEntradas("Mês setembro")
+                viewModel.getNumerosEntradas("Mês setembro")
+                viewModel.getNumerosSaidas("Mês setembro")
+                viewModel.getSaidas("Mês setembro")
+            }
+            "Mês outubro" -> {
+                viewModel.getEntradas("Mês outubro")
+                viewModel.getNumerosEntradas("Mês outubro")
+                viewModel.getNumerosSaidas("Mês outubro")
+                viewModel.getSaidas("Mês outubro")
+            }
+            "Mês novembro" -> {
+                viewModel.getEntradas("Mês novembro")
+                viewModel.getNumerosEntradas("Mês novembro")
+                viewModel.getNumerosSaidas("Mês novembro")
+                viewModel.getSaidas("Mês novembro")
+            }
+            "Mês dezembro" -> {
+                viewModel.getEntradas("Mês dezembro")
+                viewModel.getNumerosEntradas("Mês dezembro")
+                viewModel.getNumerosSaidas("Mês dezembro")
+                viewModel.getSaidas("Mês dezembro")
+            }
+
         }
     }
 

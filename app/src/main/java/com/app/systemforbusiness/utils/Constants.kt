@@ -8,7 +8,8 @@ object FireStoreCollection{
 
 object lists {
     val listCargos = listOf("Nail designer", "Manicure", "Designer de sombrancelhas", "Gerente")
-    val listMeses = listOf("Mês janeiro", "Mês fevereiro", "Mês março", "Mês abril")
+    val listMeses = listOf("Mês janeiro", "Mês fevereiro", "Mês março", "Mês abril","Mês maio","Mês junho","Mês julho",
+    "Mês agosto","Mês setembro","Mês outubro","Mês novembro","Mês dezembro")
 }
 
 object SharedPrefConstants {

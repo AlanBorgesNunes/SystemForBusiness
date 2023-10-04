@@ -27,15 +27,9 @@ class AuthRepositoryImp(
                     updateUserInfo(user) { state ->
                         when(state){
                             is UiState.Success -> {
-                                storeSession(id = it.result.user?.uid ?: "") {
-                                    if (it == null){
-                                        result.invoke(UiState.Failure("User register successfully but session failed to store"))
-                                    }else{
-                                        result.invoke(
-                                            UiState.Success("User register successfully!")
-                                        )
-                                    }
-                                }
+                                result.invoke(
+                                    UiState.Success("User register successfully!")
+                                )
                             }
                             is UiState.Failure -> {
                                 result.invoke(UiState.Failure(state.error))
@@ -77,13 +71,7 @@ class AuthRepositoryImp(
         auth.signInWithCredential(credential)
             .addOnCompleteListener {task->
                 if (task.isSuccessful){
-                    storeSession(id = task.result.user?.uid ?: ""){
-                        if (it == null){
-                            result.invoke(UiState.Failure("Failed to store local session"))
-                        }else{
-                            result.invoke(UiState.Success("Login successfully!"))
-                        }
-                    }
+                    result.invoke(UiState.Success("Login successfully!"))
                 }else{
                     try {
                         throw task.exception ?: java.lang.Exception("Invalid authentication")
@@ -123,16 +111,9 @@ class AuthRepositoryImp(
                             }
                             UiState.Loading -> {}
                             is UiState.Success ->{
-                                storeSession(id = task.result.user?.uid ?: ""){
-                                    if (it == null){
-                                        result.invoke(
-                                            UiState.Failure("User register successfully but session failed to store\""))
-                                    }else{
-                                        result.invoke(
-                                            UiState.Success("User register successfully!")
-                                        )
-                                    }
-                                }
+                                result.invoke(
+                                    UiState.Success("User register successfully!")
+                                )
                             }
                         }
                     }
@@ -199,13 +180,7 @@ class AuthRepositoryImp(
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    storeSession(id = task.result.user?.uid ?: ""){
-                        if (it == null){
-                            result.invoke(UiState.Failure("Failed to store local session"))
-                        }else{
-                            result.invoke(UiState.Success("Login successfully!"))
-                        }
-                    }
+                    result.invoke(UiState.Success("Login successfully!"))
                 }
             }.addOnFailureListener {
                 result.invoke(UiState.Failure("Authentication failed, Check email and password"))

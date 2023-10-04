@@ -88,7 +88,29 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
                 android:src="@drawable/ic_round_calendar_month_24"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/data_aniversario_colaborator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Data de aniversario"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:src="@drawable/ic_baseline_cake_24"/>
         </LinearLayout>
 
 
